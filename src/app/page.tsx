@@ -1,12 +1,12 @@
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-background text-on-background">
-      <div className="flex flex-col items-center gap-4 text-center">
-        <h1 className="text-3xl font-bold">Authentication System</h1>
-        <p className="text-base text-on-surface-variant">
-          Phase 0 — Foundations
-        </p>
-      </div>
-    </main>
-  );
+import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/auth";
+
+export default async function HomePage() {
+  const user = await getCurrentUser();
+
+  if (user) {
+    redirect("/dashboard");
+  } else {
+    redirect("/signin");
+  }
 }

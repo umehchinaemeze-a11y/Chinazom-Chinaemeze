@@ -1,6 +1,16 @@
 import { NextResponse } from "next/server";
+import { invalidateSession } from "@/lib/auth";
 
-// Phase 0 placeholder — real handler built in Phase 3 (Sign-out)
 export async function POST() {
-  return NextResponse.json({ message: "Endpoint not yet implemented" }, { status: 501 });
+  try {
+    // Deletes session from DB and clears httpOnly cookie server-side (AGENTS.md 3.7 / PRD 5.6)
+    await invalidateSession();
+    return NextResponse.json({ success: true }, { status: 200 });
+  } catch (error) {
+    console.error("Sign-out error:", error);
+    return NextResponse.json(
+      { error: "An unexpected error occurred during sign-out." },
+      { status: 500 }
+    );
+  }
 }
