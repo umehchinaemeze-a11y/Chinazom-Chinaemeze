@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
 
 // Placeholder for protected-route guard (Phase 4).
 // Protected-route guard does lightweight cookie check and redirects.
 // Heavy work (Argon2id hashing) must NEVER run in middleware (AGENTS.md 4.1).
-export function middleware(_request: NextRequest) {
+export function middleware() {
   return NextResponse.next();
 }
 
