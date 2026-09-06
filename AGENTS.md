@@ -646,3 +646,13 @@ If any box can't be checked, the task is not done — say so plainly rather than
 - When the PRD has an explicit open question (Section 14: styling library, email provider, unverified-account retention) — **use the PRD's stated default assumption** (Tailwind, console-logged email, no cleanup job) rather than resolving the open question yourself. Do not treat "it's marked open" as permission to pick a different answer than the documented default.
 - When a requirement is genuinely ambiguous and has no stated default: stop, write a clear comment or note describing the ambiguity and the options you see, and implement nothing further on that specific point until it's resolved. Do not proceed on a guess and hope it's close enough.
 - When in doubt between "do less" and "do more": do less. A smaller, correct, PRD-compliant piece of work is always preferable to a larger one that quietly exceeds scope or skips a rule in Section 3.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
