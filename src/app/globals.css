@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-on-background);
+  font-family: var(--font-dm-sans), var(--font-family), sans-serif;
+}

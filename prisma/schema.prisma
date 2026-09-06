@@ -1,0 +1,83 @@
+// Exact schema from AGENTS.md Section 2.8 — do not modify field names,
+// types, defaults, relations, or indexes without explicit instruction.
+//
+// Partial unique indexes (one active code/token per user) cannot be
+// expressed in Prisma's schema DSL and are added via a raw SQL migration.
+// See prisma/migrations/*/migration.sql (add_partial_indexes) for those.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String               @id @default(cuid())
+  name                String
+  email               String               @unique
+  passwordHash        String
+  emailVerified       Boolean              @default(false)
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+
+  sessions            Session[]
+  verificationCodes   VerificationCode[]
+  passwordResetTokens PasswordResetToken[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationCode {
+  id         String    @id @default(cuid())
+  userId     String
+  codeHash   String
+  expiresAt  DateTime
+  consumedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Index matches the actual lookup predicate: userId + codeHash equality.
+  // (userId, consumedAt) would not match the query pattern — see PRD 10.
+  @@index([userId, codeHash])
+}
+
+model PasswordResetToken {
+  id         String    @id @default(cuid())
+  userId     String
+  tokenHash  String
+  expiresAt  DateTime
+  consumedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Index matches the actual lookup predicate: userId + tokenHash equality.
+  @@index([userId, tokenHash])
+}
+
+// Rows older than 24 hours are deleted by a scheduled job or opportunistic
+// cleanup on write (PRD 7.1 / AGENTS.md 2.6). Do not let this table grow unbounded.
+model RateLimitEntry {
+  id          String   @id @default(cuid())
+  key         String
+  windowStart DateTime
+  count       Int      @default(1)
+
+  // Compound unique constraint enables the atomic fixed-window upsert-and-increment
+  // (single SQL INSERT ... ON CONFLICT DO UPDATE) without a read-then-write race.
+  // See AGENTS.md 2.6 for the exact SQL statement required.
+  @@unique([key, windowStart])
+}
