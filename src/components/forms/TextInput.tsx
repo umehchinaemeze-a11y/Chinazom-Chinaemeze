@@ -18,7 +18,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       <div className="flex flex-col gap-1 w-full text-left">
         <label
           htmlFor={id}
-          className="text-sm font-medium text-on-surface-variant flex items-center justify-between"
+          className="text-label-large text-on-surface-variant flex items-center justify-between"
         >
           <span>
             {label}
@@ -31,7 +31,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           required={required}
           aria-invalid={!!error}
           aria-describedby={describedBy}
-          className={`w-full px-3 py-2.5 rounded border text-sm text-on-surface bg-surface-container-lowest placeholder:text-outline transition-colors outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
+          className={`w-full px-3 py-2.5 rounded border text-body-medium text-on-surface bg-surface-container-lowest placeholder:text-outline transition-colors outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
             error
               ? "border-error focus:ring-error"
               : "border-outline focus:border-primary"
@@ -39,12 +39,12 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           {...props}
         />
         {error && (
-          <p id={errorId} role="alert" className="text-xs text-error font-medium mt-0.5">
+          <p id={errorId} role="alert" className="text-body-small text-error mt-0.5">
             {error}
           </p>
         )}
         {!error && helperText && (
-          <p id={helperId} className="text-xs text-outline font-normal mt-0.5">
+          <p id={helperId} className="text-body-small text-outline mt-0.5">
             {helperText}
           </p>
         )}

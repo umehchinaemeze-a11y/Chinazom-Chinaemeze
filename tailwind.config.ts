@@ -80,6 +80,16 @@ const config: Config = {
         xl: "var(--spacing-xl)",
         "2xl": "var(--spacing-2xl)",
       },
+      maxWidth: {
+        xs: "20rem",
+        sm: "24rem",
+        md: "28rem",
+        lg: "32rem",
+        xl: "36rem",
+        "2xl": "42rem",
+        card: "28rem", // 448px (auth card max width)
+        auth: "28rem",
+      },
       boxShadow: {
         hard: "var(--effect-hard-shadow)",
         medium: "var(--effect-medium-shadow)",

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { signUpSchema } from "@/lib/validation";
 import { TextInput } from "@/components/forms";
-import { Button } from "@/components/ui";
+import { AuthCard, Button } from "@/components/ui";
 
 export default function SignUpPage() {
   const [formData, setFormData] = useState({
@@ -61,6 +61,23 @@ export default function SignUpPage() {
       const data = await res.json();
 
       if (!res.ok) {
+        // Server-side validation always re-runs (AGENTS.md 3.3); surface its
+        // field errors onto the matching inputs. The signup route's only other
+        // non-ok response is the duplicate-email 400, which carries no
+        // `details` — show that message next to the email input as well.
+        if (data.details?.fieldErrors) {
+          const mapped: Record<string, string> = {};
+          for (const [field, messages] of Object.entries(data.details.fieldErrors)) {
+            if (Array.isArray(messages) && messages[0]) {
+              mapped[field] = messages[0];
+            }
+          }
+          if (Object.keys(mapped).length > 0) {
+            setFieldErrors(mapped);
+          }
+        } else if (data.error) {
+          setFieldErrors((prev) => ({ ...prev, email: data.error }));
+        }
         setGlobalError(data.error || "Failed to create account. Please try again.");
         setIsLoading(false);
         return;
@@ -79,99 +96,97 @@ export default function SignUpPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-4 bg-background">
-      <div className="w-full max-w-md bg-surface-container-lowest border border-outline-variant rounded-xl p-8 shadow-medium">
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-on-surface">Create an Account</h1>
-          <p className="text-sm text-on-surface-variant mt-1">
-            Enter your details to get started
-          </p>
-        </div>
-
-        {globalError && (
-          <div
-            role="alert"
-            className="mb-4 p-3 rounded bg-error-container text-on-error-container text-sm font-medium border border-error"
-          >
-            {globalError}
-          </div>
-        )}
-
-        {successMessage && (
-          <div
-            role="status"
-            className="mb-4 p-3 rounded bg-primary-container text-on-primary-container text-sm font-medium border border-primary"
-          >
-            <p>{successMessage}</p>
-            <div className="mt-3">
-              <Link
-                href="/signin"
-                className="inline-block text-xs font-bold text-primary underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
-              >
-                Go to Sign In &rarr;
-              </Link>
-            </div>
-          </div>
-        )}
-
-        {!successMessage && (
-          <form onSubmit={handleSubmit} noValidate className="space-y-4">
-            <TextInput
-              id="name"
-              name="name"
-              type="text"
-              label="Full Name"
-              autoComplete="name"
-              required
-              value={formData.name}
-              onChange={handleChange}
-              error={fieldErrors.name}
-              placeholder="Alex Johnson"
-            />
-
-            <TextInput
-              id="email"
-              name="email"
-              type="email"
-              label="Email Address"
-              autoComplete="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              error={fieldErrors.email}
-              placeholder="you@example.com"
-            />
-
-            <TextInput
-              id="password"
-              name="password"
-              type="password"
-              label="Password"
-              autoComplete="new-password"
-              required
-              value={formData.password}
-              onChange={handleChange}
-              error={fieldErrors.password}
-              helperText="Must be at least 8 characters."
-              placeholder="••••••••"
-            />
-
-            <Button type="submit" isLoading={isLoading} className="mt-2">
-              Create Account
-            </Button>
-          </form>
-        )}
-
-        <div className="mt-6 pt-6 border-t border-outline-variant text-center text-sm text-on-surface-variant">
-          Already have an account?{" "}
-          <Link
-            href="/signin"
-            className="text-primary font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
-          >
-            Sign in
-          </Link>
-        </div>
+    <AuthCard>
+      <div className="text-center mb-6">
+        <h1 className="text-headline-small text-on-surface">Create an Account</h1>
+        <p className="text-body-medium text-on-surface-variant mt-1">
+          Enter your details to get started
+        </p>
       </div>
-    </main>
+
+      {globalError && (
+        <div
+          role="alert"
+          className="mb-4 p-3 rounded bg-error-container text-on-error-container text-body-medium border border-error"
+        >
+          {globalError}
+        </div>
+      )}
+
+      {successMessage && (
+        <div
+          role="status"
+          className="mb-4 p-3 rounded bg-primary-container text-on-primary-container text-body-medium border border-primary"
+        >
+          <p>{successMessage}</p>
+          <div className="mt-3">
+            <Link
+              href="/signin"
+              className="inline-block text-body-small text-primary underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
+            >
+              Go to Sign In &rarr;
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {!successMessage && (
+        <form onSubmit={handleSubmit} noValidate className="space-y-4">
+          <TextInput
+            id="name"
+            name="name"
+            type="text"
+            label="Full Name"
+            autoComplete="name"
+            required
+            value={formData.name}
+            onChange={handleChange}
+            error={fieldErrors.name}
+            placeholder="Alex Johnson"
+          />
+
+          <TextInput
+            id="email"
+            name="email"
+            type="email"
+            label="Email Address"
+            autoComplete="email"
+            required
+            value={formData.email}
+            onChange={handleChange}
+            error={fieldErrors.email}
+            placeholder="you@example.com"
+          />
+
+          <TextInput
+            id="password"
+            name="password"
+            type="password"
+            label="Password"
+            autoComplete="new-password"
+            required
+            value={formData.password}
+            onChange={handleChange}
+            error={fieldErrors.password}
+            helperText="Must be at least 8 characters."
+            placeholder="••••••••"
+          />
+
+          <Button type="submit" isLoading={isLoading} className="mt-2">
+            Create Account
+          </Button>
+        </form>
+      )}
+
+      <div className="mt-6 pt-6 border-t border-outline-variant text-center text-body-medium text-on-surface-variant">
+        Already have an account?{" "}
+        <Link
+          href="/signin"
+          className="text-primary font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
+        >
+          Sign in
+        </Link>
+      </div>
+    </AuthCard>
   );
 }

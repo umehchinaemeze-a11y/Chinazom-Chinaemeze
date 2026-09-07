@@ -1,8 +1,227 @@
 @import "tailwindcss";
-@config "../../tailwind.config.ts";
+/* ============================================================
+   TAILWIND v4 THEME — replaces tailwind.config.ts
+   Maps Tailwind utility classes to design-token CSS variables.
+   ============================================================ */
+
+@theme {
+  /* ---- Colours (role tokens from tokens.css) ---- */
+  --color-primary: var(--color-primary);
+  --color-on-primary: var(--color-on-primary);
+  --color-primary-container: var(--color-primary-container);
+  --color-on-primary-container: var(--color-on-primary-container);
+
+  --color-secondary: var(--color-secondary);
+  --color-on-secondary: var(--color-on-secondary);
+  --color-secondary-container: var(--color-secondary-container);
+  --color-on-secondary-container: var(--color-on-secondary-container);
+
+  --color-tertiary: var(--color-tertiary);
+  --color-on-tertiary: var(--color-on-tertiary);
+  --color-tertiary-container: var(--color-tertiary-container);
+  --color-on-tertiary-container: var(--color-on-tertiary-container);
+
+  --color-surface: var(--color-surface);
+  --color-on-surface: var(--color-on-surface);
+  --color-surface-variant: var(--color-surface-variant);
+  --color-on-surface-variant: var(--color-on-surface-variant);
+  --color-surface-container-highest: var(--color-surface-container-highest);
+  --color-surface-container-high: var(--color-surface-container-high);
+  --color-surface-container: var(--color-surface-container);
+  --color-surface-container-low: var(--color-surface-container-low);
+  --color-surface-container-lowest: var(--color-surface-container-lowest);
+  --color-surface-tint: var(--color-surface-tint);
+  --color-surface-tint-color: var(--color-surface-tint-color);
+  --color-surface-bright: var(--color-surface-bright);
+  --color-surface-dim: var(--color-surface-dim);
+
+  --color-inverse-surface: var(--color-inverse-surface);
+  --color-inverse-on-surface: var(--color-inverse-on-surface);
+  --color-inverse-primary: var(--color-inverse-primary);
+
+  --color-outline: var(--color-outline);
+  --color-outline-variant: var(--color-outline-variant);
+
+  --color-error: var(--color-error);
+  --color-on-error: var(--color-on-error);
+  --color-error-container: var(--color-error-container);
+  --color-on-error-container: var(--color-on-error-container);
+
+  --color-background: var(--color-background);
+  --color-on-background: var(--color-on-background);
+
+  --color-scrim: var(--color-scrim);
+  --color-shadow: var(--color-shadow);
+
+  --color-primary-fixed: var(--color-primary-fixed);
+  --color-on-primary-fixed: var(--color-on-primary-fixed);
+  --color-primary-fixed-dim: var(--color-primary-fixed-dim);
+  --color-on-primary-fixed-variant: var(--color-on-primary-fixed-variant);
+
+  --color-secondary-fixed: var(--color-secondary-fixed);
+  --color-on-secondary-fixed: var(--color-on-secondary-fixed);
+  --color-secondary-fixed-dim: var(--color-secondary-fixed-dim);
+  --color-on-secondary-fixed-variant: var(--color-on-secondary-fixed-variant);
+
+  --color-tertiary-fixed: var(--color-tertiary-fixed);
+  --color-on-tertiary-fixed: var(--color-on-tertiary-fixed);
+  --color-tertiary-fixed-dim: var(--color-tertiary-fixed-dim);
+  --color-on-tertiary-fixed-variant: var(--color-on-tertiary-fixed-variant);
+
+  /* ---- Spacing (role tokens from tokens.css) ---- */
+  --spacing-xs: var(--spacing-xs);
+  --spacing-sm: var(--spacing-sm);
+  --spacing-md: var(--spacing-md);
+  --spacing-base: var(--spacing-base);
+  --spacing-lg: var(--spacing-lg);
+  --spacing-xl: var(--spacing-xl);
+  --spacing-2xl: var(--spacing-2xl);
+
+  /* ---- Max widths ---- */
+  --max-w-card: 28rem;
+  --max-w-auth: 28rem;
+
+  /* ---- Box shadows (effect tokens from tokens.css) ---- */
+  --shadow-hard: var(--effect-hard-shadow);
+  --shadow-medium: var(--effect-medium-shadow);
+  --shadow-soft: var(--effect-soft-shadow);
+
+  /* ---- Font family ---- */
+  --font-sans: var(--font-dm-sans), var(--font-family), sans-serif;
+}
 
 body {
   background-color: var(--color-background);
   color: var(--color-on-background);
   font-family: var(--font-dm-sans), var(--font-family), sans-serif;
+  min-height: 100vh;
+}
+
+/* ============================================================
+   TYPOGRAPHY TOKEN UTILITIES (AGENTS.md Section 2.5 / PRD)
+   ============================================================ */
+
+.text-display-large {
+  font-size: var(--typography-display-large-font-size);
+  font-weight: var(--typography-display-large-font-weight);
+  line-height: var(--typography-display-large-line-height);
+  letter-spacing: var(--typography-display-large-letter-spacing);
+}
+
+.text-display-medium {
+  font-size: var(--typography-display-medium-font-size);
+  font-weight: var(--typography-display-medium-font-weight);
+  line-height: var(--typography-display-medium-line-height);
+  letter-spacing: var(--typography-display-medium-letter-spacing);
+}
+
+.text-display-small {
+  font-size: var(--typography-display-small-font-size);
+  font-weight: var(--typography-display-small-font-weight);
+  line-height: var(--typography-display-small-line-height);
+  letter-spacing: var(--typography-display-small-letter-spacing);
+}
+
+.text-headline-large {
+  font-size: var(--typography-headline-large-font-size);
+  font-weight: var(--typography-headline-large-font-weight);
+  line-height: var(--typography-headline-large-line-height);
+  letter-spacing: var(--typography-headline-large-letter-spacing);
+}
+
+.text-headline-medium {
+  font-size: var(--typography-headline-medium-font-size);
+  font-weight: var(--typography-headline-medium-font-weight);
+  line-height: var(--typography-headline-medium-line-height);
+  letter-spacing: var(--typography-headline-medium-letter-spacing);
+}
+
+.text-headline-small {
+  font-size: var(--typography-headline-small-font-size);
+  font-weight: var(--typography-headline-small-font-weight);
+  line-height: var(--typography-headline-small-line-height);
+  letter-spacing: var(--typography-headline-small-letter-spacing);
+}
+
+.text-title-large {
+  font-size: var(--typography-title-large-font-size);
+  font-weight: var(--typography-title-large-font-weight);
+  line-height: var(--typography-title-large-line-height);
+  letter-spacing: var(--typography-title-large-letter-spacing);
+}
+
+.text-title-medium {
+  font-size: var(--typography-title-medium-font-size);
+  font-weight: var(--typography-title-medium-font-weight);
+  line-height: var(--typography-title-medium-line-height);
+  letter-spacing: var(--typography-title-medium-letter-spacing);
+}
+
+.text-title-small {
+  font-size: var(--typography-title-small-font-size);
+  font-weight: var(--typography-title-small-font-weight);
+  line-height: var(--typography-title-small-line-height);
+  letter-spacing: var(--typography-title-small-letter-spacing);
+}
+
+.text-body-large {
+  font-size: var(--typography-body-large-font-size);
+  font-weight: var(--typography-body-large-font-weight);
+  line-height: var(--typography-body-large-line-height);
+  letter-spacing: var(--typography-body-large-letter-spacing);
+}
+
+.text-body-medium {
+  font-size: var(--typography-body-medium-font-size);
+  font-weight: var(--typography-body-medium-font-weight);
+  line-height: var(--typography-body-medium-line-height);
+  letter-spacing: var(--typography-body-medium-letter-spacing);
+}
+
+.text-body-small {
+  font-size: var(--typography-body-small-font-size);
+  font-weight: var(--typography-body-small-font-weight);
+  line-height: var(--typography-body-small-line-height);
+  letter-spacing: var(--typography-body-small-letter-spacing);
+}
+
+.text-label-large {
+  font-size: var(--typography-label-large-font-size);
+  font-weight: var(--typography-label-large-font-weight);
+  line-height: var(--typography-label-large-line-height);
+  letter-spacing: var(--typography-label-large-letter-spacing);
+}
+
+.text-label-medium {
+  font-size: var(--typography-label-medium-font-size);
+  font-weight: var(--typography-label-medium-font-weight);
+  line-height: var(--typography-label-medium-line-height);
+  letter-spacing: var(--typography-label-medium-letter-spacing);
+}
+
+.text-label-small {
+  font-size: var(--typography-label-small-font-size);
+  font-weight: var(--typography-label-small-font-weight);
+  line-height: var(--typography-label-small-line-height);
+  letter-spacing: var(--typography-label-small-letter-spacing);
+}
+
+/* ============================================================
+   RESPONSIVE AUTHENTICATION CARD & LAYOUT UTILITIES
+   ============================================================ */
+
+.auth-card {
+  width: 100%;
+  max-width: 448px;
+  background-color: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: 16px;
+  box-shadow: var(--effect-soft-shadow);
+  padding: var(--spacing-xl);
+}
+
+@media (min-width: 640px) {
+  .auth-card {
+    padding: var(--spacing-2xl);
+  }
 }

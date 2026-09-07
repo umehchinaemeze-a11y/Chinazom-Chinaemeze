@@ -10,35 +10,43 @@ export default async function DashboardPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background p-6 md:p-12">
-      <div className="max-w-3xl mx-auto bg-surface-container-lowest border border-outline-variant rounded-xl p-8 shadow-medium">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-outline-variant">
+    <main className="min-h-screen bg-background p-xl md:p-2xl">
+      <div className="max-w-3xl mx-auto">
+        <header className="flex flex-col items-start gap-base pb-xl border-b border-outline-variant sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-on-surface">Dashboard</h1>
-            <p className="text-sm text-on-surface-variant mt-1">
+            <h1 className="text-headline-large text-on-surface">Dashboard</h1>
+            <p className="text-body-medium text-on-surface-variant mt-sm">
               Welcome to your authenticated session.
             </p>
           </div>
           <SignOutButton />
-        </div>
+        </header>
 
-        <div className="mt-6 space-y-4">
-          <div className="p-4 rounded-lg bg-surface-container-low border border-outline-variant">
-            <h2 className="text-xs uppercase tracking-wider font-semibold text-outline mb-1">
-              Account Details
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3">
-              <div>
-                <span className="text-xs text-on-surface-variant block">Full Name</span>
-                <span className="text-sm font-medium text-on-surface">{user.name}</span>
-              </div>
-              <div>
-                <span className="text-xs text-on-surface-variant block">Email Address</span>
-                <span className="text-sm font-medium text-on-surface">{user.email}</span>
-              </div>
+        <section
+          aria-labelledby="account-details-heading"
+          className="mt-xl bg-surface-container-lowest border border-outline-variant rounded-2xl shadow-soft p-xl sm:p-2xl"
+        >
+          <h2
+            id="account-details-heading"
+            className="text-label-small uppercase tracking-wider text-on-surface-variant"
+          >
+            Account Details
+          </h2>
+          <dl className="grid grid-cols-1 sm:grid-cols-2 gap-y-xl sm:gap-x-2xl mt-lg">
+            <div className="min-w-0">
+              <dt className="text-label-medium text-on-surface-variant">Full Name</dt>
+              <dd className="text-body-large text-on-surface break-words mt-sm">
+                {user.name}
+              </dd>
             </div>
-          </div>
-        </div>
+            <div className="min-w-0">
+              <dt className="text-label-medium text-on-surface-variant">Email Address</dt>
+              <dd className="text-body-large text-on-surface break-words mt-sm">
+                {user.email}
+              </dd>
+            </div>
+          </dl>
+        </section>
       </div>
     </main>
   );

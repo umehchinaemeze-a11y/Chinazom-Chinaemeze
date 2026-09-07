@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signInSchema } from "@/lib/validation";
 import { TextInput } from "@/components/forms";
-import { Button } from "@/components/ui";
+import { AuthCard, Button } from "@/components/ui";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -57,6 +57,7 @@ export default function SignInPage() {
       const data = await res.json();
 
       if (!res.ok) {
+        // One generic message regardless of which field was wrong (AGENTS.md 3.1 / PRD 5.2)
         setGlobalError(data.error || "Invalid email or password.");
         setIsLoading(false);
         return;
@@ -72,79 +73,76 @@ export default function SignInPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-4 bg-background">
-      <div className="w-full max-w-md bg-surface-container-lowest border border-outline-variant rounded-xl p-8 shadow-medium">
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-on-surface">Sign In</h1>
-          <p className="text-sm text-on-surface-variant mt-1">
-            Enter your credentials to access your account
-          </p>
-        </div>
-
-        {globalError && (
-          <div
-            role="alert"
-            className="mb-4 p-3 rounded bg-error-container text-on-error-container text-sm font-medium border border-error"
-          >
-            {globalError}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} noValidate className="space-y-4">
-          <TextInput
-            id="email"
-            name="email"
-            type="email"
-            label="Email Address"
-            autoComplete="email"
-            required
-            value={formData.email}
-            onChange={handleChange}
-            error={fieldErrors.email}
-            placeholder="you@example.com"
-          />
-
-          <div>
-            <div className="flex justify-between items-center mb-1">
-              <span className="sr-only">Password Controls</span>
-            </div>
-            <TextInput
-              id="password"
-              name="password"
-              type="password"
-              label="Password"
-              autoComplete="current-password"
-              required
-              value={formData.password}
-              onChange={handleChange}
-              error={fieldErrors.password}
-              placeholder="••••••••"
-            />
-            <div className="text-right mt-1.5">
-              <Link
-                href="/forgot-password"
-                className="text-xs text-primary font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
-              >
-                Forgot password?
-              </Link>
-            </div>
-          </div>
-
-          <Button type="submit" isLoading={isLoading} className="mt-2">
-            Sign In
-          </Button>
-        </form>
-
-        <div className="mt-6 pt-6 border-t border-outline-variant text-center text-sm text-on-surface-variant">
-          Don&apos;t have an account?{" "}
-          <Link
-            href="/signup"
-            className="text-primary font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
-          >
-            Sign up
-          </Link>
-        </div>
+    <AuthCard>
+      <div className="text-center mb-6">
+        <h1 className="text-headline-small font-semibold text-on-surface">
+          Sign In
+        </h1>
+        <p className="text-body-medium text-on-surface-variant mt-1">
+          Enter your credentials to access your account
+        </p>
       </div>
-    </main>
+
+      {globalError && (
+        <div
+          role="alert"
+          className="mb-4 p-3 rounded bg-error-container text-on-error-container text-body-medium border border-error"
+        >
+          {globalError}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} noValidate className="space-y-4">
+        <TextInput
+          id="email"
+          name="email"
+          type="email"
+          label="Email Address"
+          autoComplete="email"
+          required
+          value={formData.email}
+          onChange={handleChange}
+          error={fieldErrors.email}
+          placeholder="you@example.com"
+        />
+
+        <div>
+          <TextInput
+            id="password"
+            name="password"
+            type="password"
+            label="Password"
+            autoComplete="current-password"
+            required
+            value={formData.password}
+            onChange={handleChange}
+            error={fieldErrors.password}
+            placeholder="••••••••"
+          />
+          <div className="text-right mt-sm">
+            <Link
+              href="/forgot-password"
+              className="text-body-small text-primary font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
+            >
+              Forgot password?
+            </Link>
+          </div>
+        </div>
+
+        <Button type="submit" isLoading={isLoading} className="mt-2">
+          Sign In
+        </Button>
+      </form>
+
+      <div className="mt-6 pt-6 border-t border-outline-variant text-center text-body-medium text-on-surface-variant">
+        Don&apos;t have an account?{" "}
+        <Link
+          href="/signup"
+          className="text-primary font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
+        >
+          Sign up
+        </Link>
+      </div>
+    </AuthCard>
   );
 }

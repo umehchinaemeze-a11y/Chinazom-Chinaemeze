@@ -1,0 +1,33 @@
+{
+  "version": 1.1,
+  "atDirectives": [
+    {
+      "name": "@theme",
+      "description": "Tailwind CSS v4 theme directive. Defines design tokens (colors, spacing, fonts, shadows) mapped to CSS variables. See https://tailwindcss.com/docs/theme"
+    },
+    {
+      "name": "@apply",
+      "description": "Tailwind CSS directive to inline utility classes into custom CSS"
+    },
+    {
+      "name": "@tailwind",
+      "description": "Tailwind CSS directive used to inject Tailwind's base, components, utilities and screens styles"
+    },
+    {
+      "name": "@config",
+      "description": "Tailwind CSS directive to point to a config file"
+    },
+    {
+      "name": "@utility",
+      "description": "Tailwind CSS v4 directive to define custom utilities"
+    },
+    {
+      "name": "@variant",
+      "description": "Tailwind CSS v4 directive to define custom variants"
+    },
+    {
+      "name": "@source",
+      "description": "Tailwind CSS v4 directive to declare sources"
+    }
+  ]
+}

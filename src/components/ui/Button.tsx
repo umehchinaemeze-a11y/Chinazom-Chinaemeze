@@ -32,7 +32,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={disabled || isLoading}
         aria-busy={isLoading}
-        className={`w-full py-2.5 px-4 rounded font-medium text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${variantStyles} ${className}`}
+        className={`w-full py-2.5 px-4 rounded text-label-large transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${variantStyles} ${className}`}
         {...props}
       >
         {isLoading && (
